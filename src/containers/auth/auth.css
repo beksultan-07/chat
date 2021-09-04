@@ -1,0 +1,32 @@
+
+.auth__title{
+    text-align: center;
+}
+
+.auth__error{
+    text-align: center;
+    color: rgb(255, 255, 255);
+    background: rgba(255, 0, 0, 0.678);
+    padding: 10px 20px;
+}
+
+.auth__form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.auth__inp{
+    padding: 10px 50px;
+    margin: 10px 0;
+    outline: none;
+    border-radius: 3px;
+    border: none;
+}
+
+
+.auth__btn{
+    margin-top: 20px;
+    background: #C9D0A4;
+    color: #817164;
+}

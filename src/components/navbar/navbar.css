@@ -1,0 +1,40 @@
+.header{
+    background: #C9D0A4;
+    padding: 20px;
+}
+
+.header__top{
+    display: flex;
+    /* justify-content: space-between; */
+    align-items: center;
+}
+
+.header__logo{
+    font-size: 2rem;
+    font-weight: bold;
+    color: #817164;
+    font-style: initial;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.header_btns{
+    margin-left: auto   ;
+}
+
+.header__btn{
+    background: #817164;
+    color: #C9D0A4;
+    margin: 5px 10px;
+}
+
+
+.header__btn:hover{
+    transform: scale(1.2);
+}
+
+@media screen and (max-width: 400px) {
+    .header__btn {
+        padding: 5px 3px;
+    }
+  }

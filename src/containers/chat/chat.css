@@ -1,0 +1,71 @@
+.chat{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}
+
+.chat__massages{
+    overflow: auto;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    border-radius: 4px;
+    align-items: flex-start;
+    background: #c9d0a47c;
+}
+
+::-webkit-scrollbar {
+    background-color: #c9d0a4c2;
+}
+
+/* ползунок скроллбара */
+::-webkit-scrollbar-thumb {
+    background-color: #574d45;
+}
+
+.massage{
+    background: #C9D0A4;
+    color: #817164;
+    padding: 5px 10px;
+    border-radius: 4px;
+    margin: 5px 0;
+}
+
+.mySms{
+    margin-left: auto;
+}
+
+.chat__form{
+    width: 100%;
+    margin-bottom: auto;
+}
+
+.chat__input{
+    width: calc(100% - 87px);
+    background: #C9D0A4;
+    color: #817164;
+    border: none;
+    border-radius: 10px 0px 0px 10px;
+    padding: 10px 20px;
+    font-size: 18px;
+    outline: none;
+    border-right: 1px solid #817164;
+}
+
+.chat__input::placeholder{
+    color: #817164;
+
+}
+
+.send__btn{
+    background: #C9D0A4;
+    color: #817164;
+    margin: 5px 5px 5px 0;
+    border-radius: 0px 10px 10px 0 ;
+}
