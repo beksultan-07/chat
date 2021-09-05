@@ -7,6 +7,7 @@ import './navbar.css'
 
 function Navbar() {
     const [authBtn, setAuthBtn] = useState([])
+    const [checkBtn, setCheckBtn] = useState(false)
     
     let history = useHistory();
     const dispatch = useDispatch()
@@ -17,21 +18,21 @@ function Navbar() {
         if (history.location.pathname === '/authentication'){
             setAuthBtn('Register')
         }else{
-            if(state.auth) setAuthBtn('Log out') 
+            if(state.auth) setAuthBtn('Log out')
             else setAuthBtn('Log in')
         }
     }, [state.auth])
 
-
-
     function headerAuth(){
         if (history.location.pathname === '/authentication'){
-            dispatch({type: 'authBtn', value: !state.login})
-            if (state.login) setAuthBtn('Log in')
+            dispatch({type: 'headerBtn', value: !state.login})
+            setCheckBtn(val => !val)
+            
+            if (checkBtn) setAuthBtn('Log in')
             else setAuthBtn('Register')
         }else{
-            history.push('/authentication')
             dispatch({type: 'changeAuth', value: false})
+            history.push('/authentication')
         }
     }
 

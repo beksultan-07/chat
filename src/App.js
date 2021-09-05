@@ -14,10 +14,10 @@ function App() {
 
     const state = useSelector(state => state)
     let history = useHistory();
-
+    
     useEffect(() => {
         if (!state.auth) history.push('/authentication')
-    }, [])
+    }, [state.auth])
     
     return (
         <div className="wrap">     

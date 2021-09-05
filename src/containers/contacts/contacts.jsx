@@ -1,5 +1,6 @@
+import axios from '../../components/axiosFB/axiosFB'
 import {useEffect, useState} from 'react'
-import {useSelector} from 'react-redux'
+import {useSelector,useDispatch} from 'react-redux'
 import {useHistory} from 'react-router-dom'
 
 import User from '../../components/user/user'
@@ -12,13 +13,27 @@ function Contacts() {
     const history = useHistory()
 
     useEffect(() => {
-        state.users.forEach(element => {
-            if (element.email != state.userEmail) {
-                setAllUsers(el => [...el, element])
-            }
-        });
+        if (!state.auth) {
+            history.push('/authentication')
+        }else{
+            watchUsersFB()
+        }
     }, [])
 
+    function watchUsersFB() {
+
+        axios.get('/users.json')
+            .then(res => {
+                let user = []
+                for(let i in res.data){
+                    if (res.data[i].email != state.userEmail) {
+                        user.push(res.data[i])
+                    }
+                }
+                setAllUsers(user)
+                watchUsersFB()
+            })
+        }
     function userClick(e){
         try {
             let username = e.target.children[1].children[2].innerText

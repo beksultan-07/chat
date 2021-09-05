@@ -3,7 +3,7 @@ import React from 'react'
 function Settings() {
     return (
         <section className='settings'>
-            user settings
+            This page is making . . .
         </section>
     )
 }

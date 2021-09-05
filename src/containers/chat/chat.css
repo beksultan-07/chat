@@ -69,3 +69,12 @@
     margin: 5px 5px 5px 0;
     border-radius: 0px 10px 10px 0 ;
 }
+
+.talking-user{
+    background: #C9D0A4;
+    color: #817164;
+    width: 100%;
+    text-align: center;
+    margin: 0;
+    padding: 5px 0;
+}

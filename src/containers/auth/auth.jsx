@@ -5,6 +5,9 @@ import {useHistory} from 'react-router-dom'
 
 import Reg from '../../components/sign/reg'
 import SignIn from '../../components/sign/signIn'
+import firebase, {auth} from '../../config/configFB'
+import axios from '../../components/axiosFB/axiosFB'
+
 
 function Auth() {
     const [userName, setUserName] = useState('')
@@ -32,7 +35,6 @@ function Auth() {
             setAuthBtn('Register')
             setChangeRegSign([<Reg key='1' input__Value={input__Value}/>])  
         }
-
     }, [state.login])
 
     function clickBtn(e){
@@ -47,18 +49,43 @@ function Auth() {
                 if(password != password2){
                     setErrorMassage([<h3 className='auth__error'>The specified passwords do not match</h3>])
                 }else{
-                    history.push('/')
-                    dispatch({type: 'changeAuth', value: true})
-                    dispatch({type: 'userEmail', value: email})
+                    firebase.auth()
+                        .createUserWithEmailAndPassword(email, password)
+                        .then(res => {
+                            dispatch({type: 'changeAuth', value: true})
+                            dispatch({type: 'userEmail', value: email})
+                            
+
+
+                            const createUser = {
+                                id: state.users.length,
+                                name: userName,
+                                phone: userContact,
+                                email: email
+                            }
+                            axios.post('/users.json', createUser)
+                                .finally(() => {
+                                    history.push('/')
+                                })
+                            }).catch(err => {
+                                setErrorMassage(<h3 className='auth__error'>{err.message}</h3>)
+                        })
                 }
             }else{
                 setErrorMassage([<h3 className='auth__error'>You forgot to fill in one field</h3>])
             }
         }else if(e.target.innerText === 'Log in'){
             if(email !== '' && password !== ''){
-                history.push('/')
-                dispatch({type: 'changeAuth', value: true})
-                dispatch({type: 'userEmail', value: email})
+                firebase.auth()
+                .signInWithEmailAndPassword(email, password)
+                .then(res => {
+                    dispatch({type: 'userEmail', value: email})
+                    dispatch({type: 'changeAuth', value: true})
+                    history.push('/')
+                }).catch(err => {
+                    setErrorMassage(<h3 className='auth__error'>{err.message}</h3>)
+                })
+
             }else{
                 setErrorMassage([<h3 className='auth__error'>Incorrect login or password</h3>])
             }
