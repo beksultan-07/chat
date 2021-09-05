@@ -4,15 +4,18 @@ import {useSelector,useDispatch} from 'react-redux'
 import {useHistory} from 'react-router-dom'
 
 import User from '../../components/user/user'
+import Loader from '../../components/loader/loader'
 
 function Contacts() {
     const [allUsers, setAllUsers] = useState([])
+    const [loader, setLoader] = useState([])
 
     const state = useSelector(state => state)
 
     const history = useHistory()
 
     useEffect(() => {
+        setLoader([<Loader/>])
         if (!state.auth) {
             history.push('/authentication')
         }else{
@@ -24,6 +27,8 @@ function Contacts() {
 
         axios.get('/users.json')
             .then(res => {
+                setLoader([])
+
                 let user = []
                 for(let i in res.data){
                     if (res.data[i].email != state.userEmail) {
@@ -45,6 +50,7 @@ function Contacts() {
 
     return (
         <section className='contacts'>
+            {loader}
             <ul className='users'>
                 {allUsers.map((el, index)=> {
                     return <User 

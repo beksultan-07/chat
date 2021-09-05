@@ -2,7 +2,7 @@ const initialState = {
     auth: false,
     userEmail: null,
     userFirebaseId: null,
-    login: false,
+    login: true,
 }
 
 const reducer  = (state = initialState, action) => {

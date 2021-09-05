@@ -3,18 +3,21 @@ import { useState, useEffect } from 'react'
 import { useSelector, useDispatch} from 'react-redux'
 import { useLocation } from 'react-router-dom'
 import axios from '../../components/axiosFB/axiosFB'
+import Loader from '../../components/loader/loader'
 
 
-// {id: 3, sms: 'im good', from: 'butsing@gmail.com', to: 'asad@gmail.com'}
 
 function Chat() {
     const [messageInp, setMessageInp] = useState('')
     const [allMessagesHTML, setAllMessagesHTLM] = useState([])
+    const [smsLen, setSmsLen] = useState()
+    const [loader, setLoader] = useState([])
 
     const state = useSelector(state => state)
     const location = useLocation();
 
     useEffect(() => {
+        setLoader([<Loader/>])
         setAllMessagesHTLM([])
         watchUserSms()
 
@@ -24,6 +27,8 @@ function Chat() {
         axios.get('/messages.json')
             .then(res => {
                 setAllMessagesHTLM([])
+                setLoader([])
+                setSmsLen(Object.keys(res.data).length)
                 for(let i in res.data){
                     let el = res.data[i][0]
                     if (el.from === state.userEmail && el.to === location.state.params || 
@@ -43,19 +48,20 @@ function Chat() {
 
     function sendMessage(e) {
         e.preventDefault()
-    
+        setLoader([<Loader/>])
         let messages = []
-        messages.push({id: messages.length, sms: messageInp, from: state.userEmail, to: location.state.params})
+        messages.push({id: smsLen, sms: messageInp, from: state.userEmail, to: location.state.params})
 
         axios.post('/messages.json', messages)
             .finally(() => {
-                // setAllMessages(sms => [...sms, <p className='massage mySms'>{messageInp}</p>])
+                setLoader([])
                 setMessageInp('')
             })
     }
 
     return (
         <section className='chat'>
+            {loader}
             <h4 className="talking-user">{location.state.params}</h4>
             <div className="chat__massages">
                 {allMessagesHTML}
