@@ -1,7 +1,6 @@
 import './chat.css'
 import { useState, useEffect } from 'react'
 import { useSelector, useDispatch} from 'react-redux'
-import { useLocation } from 'react-router-dom'
 import axios from '../../components/axiosFB/axiosFB'
 import Loader from '../../components/loader/loader'
 
@@ -14,7 +13,6 @@ function Chat() {
     const [loader, setLoader] = useState([])
 
     const state = useSelector(state => state)
-    const location = useLocation();
 
     useEffect(() => {
         setLoader([<Loader/>])
@@ -31,8 +29,8 @@ function Chat() {
                 setSmsLen(Object.keys(res.data).length)
                 for(let i in res.data){
                     let el = res.data[i][0]
-                    if (el.from === state.userEmail && el.to === location.state.params || 
-                        el.from === location.state.params && el.to === state.userEmail ) {
+                    if (el.from === state.userEmail && el.to === state.chatUserName.email || 
+                        el.from === state.chatUserName.email && el.to === state.userEmail ) {
                             if (el.from === state.userEmail) {
                                 setAllMessagesHTLM(sms => [...sms, <p key={el.id} className='massage mySms'>{el.sms}</p>])
                             }else{
@@ -50,7 +48,7 @@ function Chat() {
         e.preventDefault()
         setLoader([<Loader/>])
         let messages = []
-        messages.push({id: smsLen, sms: messageInp, from: state.userEmail, to: location.state.params})
+        messages.push({id: smsLen, sms: messageInp, from: state.userEmail, to: state.chatUserName.email})
 
         axios.post('/messages.json', messages)
             .finally(() => {
@@ -62,7 +60,7 @@ function Chat() {
     return (
         <section className='chat'>
             {loader}
-            <h4 className="talking-user">{location.state.params}</h4>
+            <h4 className="talking-user">{state.chatUserName.name}</h4>
             <div className="chat__massages">
                 {allMessagesHTML}
             </div>
