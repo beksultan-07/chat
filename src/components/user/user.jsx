@@ -3,7 +3,8 @@ import './user.css'
 
 function User(props) {
     return (
-        <li className='user' onClick={e => props.clickUser(e)}>
+        <li className='user'>
+            <div className="shell" onClick={e => props.clickUser(e, props.name, props.email)}></div>
             <div className="img-wrap">
                 <img src={img} alt="" />
             </div>

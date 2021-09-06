@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 
-import { useHistory } from 'react-router-dom'
+import { useHistory,  useLocation} from 'react-router-dom'
 import './navbar.css'
 
 
 function Navbar() {
     const [authBtn, setAuthBtn] = useState([])
-    const [checkBtn, setCheckBtn] = useState(false)
+    let location = useLocation()
     
     let history = useHistory();
     const dispatch = useDispatch()
@@ -15,21 +15,17 @@ function Navbar() {
     const state = useSelector(state => state)
 
     useEffect(() => {
-        if (history.location.pathname === '/authentication'){
-            setAuthBtn('Register')
-        }else{
-            if(state.auth) setAuthBtn('Log out')
+        if (location.pathname === '/authentication'){
+            if (state.login) setAuthBtn('Register')
             else setAuthBtn('Log in')
+        }else{
+            setAuthBtn('Log out')
         }
-    }, [state.auth])
+    }, [state.login, location.pathname])
 
     function headerAuth(){
-        if (history.location.pathname === '/authentication'){
+        if (location.pathname === '/authentication'){
             dispatch({type: 'headerBtn', value: !state.login})
-            setCheckBtn(val => !val)
-            
-            if (checkBtn) setAuthBtn('Log in')
-            else setAuthBtn('Register')
         }else{
             dispatch({type: 'changeAuth', value: false})
             history.push('/authentication')

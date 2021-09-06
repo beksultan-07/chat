@@ -12,6 +12,7 @@ function Contacts() {
 
     const state = useSelector(state => state)
 
+    const dispatch = useDispatch()
     const history = useHistory()
 
     useEffect(() => {
@@ -39,10 +40,11 @@ function Contacts() {
                 watchUsersFB()
             })
         }
-    function userClick(e){
+    function userClick(e, name, email){
         try {
-            let username = e.target.children[1].children[2].innerText
-            history.push('/chat', {params: username})
+            console.log(name, email);
+            dispatch({type: 'changeTUser', value: {name, email}})
+            history.push('/chat')
         } catch (error) {
             console.log(error);
         }

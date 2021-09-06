@@ -3,6 +3,10 @@ const initialState = {
     userEmail: null,
     userFirebaseId: null,
     login: true,
+    chatUserName: {
+        email: '',
+        name: ''
+    }
 }
 
 const reducer  = (state = initialState, action) => {
@@ -13,6 +17,8 @@ const reducer  = (state = initialState, action) => {
             return {...state, login: action.value}
         case 'userEmail':
             return {...state, userEmail: action.value}
+        case 'changeTUser':
+            return {...state, chatUserName: action.value}
 
         default:
             return state
